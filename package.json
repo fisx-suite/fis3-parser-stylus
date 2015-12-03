@@ -1,0 +1,20 @@
+{
+  "name": "fis3-parser-stylus",
+  "version": "0.1.0",
+  "description": "A parser for fis3 to compile stylus files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fis",
+    "fis3",
+    "stylus",
+    "css"
+  ],
+  "author": "sparklewhy@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "stylus": "^0.52.4"
+  }
+}
