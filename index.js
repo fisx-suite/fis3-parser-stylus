@@ -21,6 +21,7 @@ module.exports = function (content, file, conf) {
     });
     options.paths = confPaths;
 
+    // 初始化 source map
     var sourceMap = options.sourcemap || false;
     var sourceMapFile;
     if (sourceMap) {
