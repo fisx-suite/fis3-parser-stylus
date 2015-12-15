@@ -15,6 +15,6 @@
   "author": "sparklewhy@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "stylus": "^0.52.4"
+    "stylus": "^0.53.0"
   }
 }

@@ -21,12 +21,32 @@ module.exports = function (content, file, conf) {
     });
     options.paths = confPaths;
 
+    var sourceMap = options.sourcemap || false;
+    var sourceMapFile;
+    if (sourceMap) {
+        if (_.isBoolean(sourceMap)) {
+            sourceMap = {};
+        }
+
+        var sourceMapPath = file.realpath + '.map';
+        sourceMapFile = fis.file.wrap(sourceMapPath);
+        sourceMapFile.setContent('');
+        var path = require('path');
+        sourceMap = _.assign({
+            comment: true,
+            sourceMapURL: path.basename(sourceMapFile.url),
+            basePath: fis.project.getProjectPath(),
+            sourceRoot: '/source',
+            inline: true
+        }, sourceMap);
+    }
+
     // 初始化编译选项
     var compiler = stylus(content)
         .set('filename', options.pathname)
         .set('compress', !!options.compress)
         .set('paths', options.paths)
-        .set('sourcemap', options.sourcemap || false)
+        .set('sourcemap', sourceMap)
         .use(function (style) {
             if (_.isFunction(options.use)) {
                 options.use(style);
@@ -51,6 +71,11 @@ module.exports = function (content, file, conf) {
             throw err;
         }
         result = css.toString();
+
+        if (compiler.sourcemap && sourceMap && sourceMapFile) {
+            sourceMapFile.setContent(JSON.stringify(compiler.sourcemap, null, 2));
+            file.derived.push(sourceMapFile);
+        }
     });
 
     return result;
