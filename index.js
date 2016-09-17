@@ -48,6 +48,8 @@ module.exports = function (content, file, conf) {
         .set('compress', !!options.compress)
         .set('paths', options.paths)
         .set('sourcemap', sourceMap)
+        // http://stylus-lang.com/docs/js.html#stylusresolveroptions
+        .define('url', stylus.resolver())
         .use(function (style) {
             if (_.isFunction(options.use)) {
                 options.use(style);
