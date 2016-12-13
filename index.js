@@ -5,8 +5,9 @@
 
 'use strict';
 
-var stylus = require('stylus');
-module.exports = function (content, file, conf) {
+module.exports = exports = function (content, file, conf) {
+    var stylus = exports.parser;
+
     var _ = fis.util;
     var options = _.assign({
         pathname: file.realpath
@@ -34,11 +35,9 @@ module.exports = function (content, file, conf) {
         sourceMapFile.setContent('');
         var path = require('path');
         sourceMap = _.assign({
-            comment: true,
+            comment: !sourceMap.inline,
             sourceMapURL: path.basename(sourceMapFile.url),
-            basePath: fis.project.getProjectPath(),
-            sourceRoot: '/source',
-            inline: true
+            inline: false
         }, sourceMap);
     }
 
@@ -83,3 +82,6 @@ module.exports = function (content, file, conf) {
 
     return result;
 };
+
+exports.parser = require('stylus');
+
