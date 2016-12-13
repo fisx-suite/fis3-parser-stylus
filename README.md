@@ -1,6 +1,9 @@
 fis3-parser-stylus
 ========
 
+[![Dependency Status](https://david-dm.org/wuhy/fis3-parser-stylus.svg)](https://david-dm.org/wuhy/fis3-parser-stylus) [![devDependency Status](https://david-dm.org/wuhy/fis3-parser-stylus/dev-status.svg)](https://david-dm.org/wuhy/fis3-parser-stylus#info=devDependencies) [![NPM Version](https://img.shields.io/npm/v/fis3-parser-stylus.svg?style=flat)](https://npmjs.org/package/fis3-parser-stylus)
+
+
 > A parser for fis3 to compile stylus files.
 
 
