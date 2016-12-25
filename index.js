@@ -10,7 +10,7 @@ module.exports = exports = function (content, file, conf) {
 
     var _ = fis.util;
     var options = _.assign({
-        pathname: file.realpath
+        filename: file.realpath
     }, conf);
 
     // 初始化查找路径
@@ -34,31 +34,34 @@ module.exports = exports = function (content, file, conf) {
         sourceMapFile = fis.file.wrap(sourceMapPath);
         sourceMapFile.setContent('');
         var path = require('path');
-        sourceMap = _.assign({
+        options.sourcemap = _.assign({
             comment: !sourceMap.inline,
             sourceMapURL: path.basename(sourceMapFile.url),
             inline: false
         }, sourceMap);
     }
 
-    // 初始化编译选项
-    var compiler = stylus(content)
-        .set('filename', options.pathname)
-        .set('compress', !!options.compress)
-        .set('paths', options.paths)
-        .set('sourcemap', sourceMap)
-        // http://stylus-lang.com/docs/js.html#stylusresolveroptions
-        .define('url', stylus.resolver())
-        .use(function (style) {
-            if (_.isFunction(options.use)) {
-                options.use(style);
-            }
+    var stylusUse = options.use;
+    delete options.use;
 
-            var defineOpt = options.define;
-            defineOpt && Object.keys(defineOpt).forEach(function (name) {
-                style.define(name, defineOpt[name]);
-            });
+    // http://stylus-lang.com/docs/js.html#stylusresolveroptions
+    var defineOpt = options.define || {url: stylus.resolver()};
+    delete options.define;
+
+    // 初始化编译选项
+    var compiler = stylus(content);
+    Object.keys(options).forEach(function (key) {
+        compiler.set(key, options[key]);
+    });
+    compiler.use(function (style) {
+        if (_.isFunction(stylusUse)) {
+            stylusUse(style);
+        }
+
+        defineOpt && Object.keys(defineOpt).forEach(function (name) {
+            style.define(name, defineOpt[name]);
         });
+    });
 
     // 初始化依赖
     var deps = compiler.deps() || [];
@@ -84,4 +87,3 @@ module.exports = exports = function (content, file, conf) {
 };
 
 exports.parser = require('stylus');
-
