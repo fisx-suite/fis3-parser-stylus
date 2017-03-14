@@ -19,10 +19,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wuhy/fis3-parser-stylus.git"
+    "url": "git+https://github.com/fisx-suite/fis3-parser-stylus.git"
   },
   "bugs": {
-    "url": "https://github.com/wuhy/fis3-parser-stylus/issues"
+    "url": "https://github.com/fisx-suite/fis3-parser-stylus/issues"
   },
-  "homepage": "https://github.com/wuhy/fis3-parser-stylus#readme"
+  "homepage": "https://github.com/fisx-suite/fis3-parser-stylus#readme"
 }
